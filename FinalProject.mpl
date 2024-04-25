@@ -81,6 +81,9 @@ GeneratePuzzle := proc(starterWord, minLength, maxWordOverlap, minWordLength, ma
 	finishingWords := {};
 	while finishingWords = {} do:
 		puzzle := AppendFollowerToPuzzle(puzzle, overlapRand(), wordLenRand());
+
+		# TODO: How do we choose how many letters the last puzzle word should have as overlap
+		# with the first puzzle word?
 		finishingWords := SubsetWords(wordLenRand(), puzzle[-1][1..1], puzzle[1][1..1]);
 	od:
 
