@@ -52,6 +52,42 @@ SubsetWords := proc(n, startL, endL) local words, outWords, word:
 	return outWords;
 end:
 
+# GeneratePuzzle(starterWord, minLength, maxWordOverlap, minWordLength, maxWordLength)
+# Generate a snake charmer puzzle that has a starter word, then uses Followers (where the k value is randomly chosen between 1 and maxWordOverlap) to repeatedly 
+# generate words until minLength is hit, then try to keep choosing words until there exists one that overlaps with the first word (currently only 1 letter overlap).
+# Every word in the puzzle has length bounded by [minWordLength, maxWordLength]
+
+AppendFollowerToPuzzle := proc(puzzle, overlapRand, wordLenRand):
+	followers := {};
+	while followers = {} do:
+		followers := Followers(puzzle[-1], overlapRand(), wordLenRand());
+	od:
+	puzzleMod := [op(puzzle), followers[rand(1..nops(followers))()]];
+	return puzzleMod;
+end:
+
+GeneratePuzzle := proc(starterWord, minLength, maxWordOverlap, minWordLength, maxWordLength):
+	puzzle := [starterWord];
+
+	wordsLeft := minLength;	
+	overlapRand := rand(1..maxWordOverlap);
+	wordLenRand := rand(minWordLength..maxWordLength);
+	while wordsLeft <> 1 do:
+		puzzle := AppendFollowerToPuzzle(puzzle, overlapRand, wordLenRand);
+		wordsLeft -= 1;
+	od:
+
+	# Keep adding words until we complete the puzzle.
+	finishingWords := {};
+	while finishingWords = {} do:
+		puzzle := AppendFollowerToPuzzle(puzzle, overlapRand(), wordLenRand());
+		finishingWords := SubsetWords(wordLenRand(), puzzle[-1][1..1], puzzle[1][1..1]);
+	od:
+
+	puzzle := [op(puzzle), finishingWords[1..rand(1..nops(finishingWords))()]];
+	return puzzle;
+end:
+
 # Potential TODO:
 
 # Choose a starter word -> generate a puzzle of N words
