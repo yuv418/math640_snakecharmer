@@ -29,6 +29,7 @@ def run(puzzleLen, wordPositions, hints, solution):
 	running = True
 
 	displaySolutions = False
+	highlightRegion = 3
 
 	# load font:
 	font = pg.font.Font(pg.font.get_default_font(), 24)
@@ -45,6 +46,16 @@ def run(puzzleLen, wordPositions, hints, solution):
 					displaySolutions = not displaySolutions
 		
 		screen.fill("white") # clear screen
+
+		if highlightRegion >= 0: # highlighted box for typing (looks really bad)
+			startAngle = -((highlightRegion + 1) / puzzleLen) * 2.0 * math.pi + math.pi * 0.5
+			endAngle   = -(highlightRegion       / puzzleLen) * 2.0 * math.pi + math.pi * 0.5
+			width = PUZZLE_OUTER_RAD - PUZZLE_INNER_RAD
+
+			pos = (PUZZLE_CENTER[0] - PUZZLE_OUTER_RAD, PUZZLE_CENTER[1] - PUZZLE_OUTER_RAD)
+			size = (PUZZLE_OUTER_RAD * 2, PUZZLE_OUTER_RAD * 2)
+
+			pg.draw.arc(screen, (150, 150, 255), pg.Rect(pos, size), startAngle, endAngle, width=width)
 
 		pg.draw.circle(screen, (0,0,0), PUZZLE_CENTER, PUZZLE_INNER_RAD, width=PUZZLE_LINE_WIDTH) # inner circle
 		pg.draw.circle(screen, (0,0,0), PUZZLE_CENTER, PUZZLE_OUTER_RAD, width=PUZZLE_LINE_WIDTH) # outer circle
