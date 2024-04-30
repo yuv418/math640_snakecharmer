@@ -168,4 +168,4 @@ PuzzleToJSON := proc(puzzle, constraintsFile, outputDir):
 	starterWord      := starterWordPool[rand(1..nops(starterWordPool))()];
 	
 	generatedPuzzles := 0;
-end
+end:
