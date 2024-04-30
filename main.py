@@ -46,6 +46,10 @@ async def main(puzzleLen, wordPositions, hints, solution):
             if event.type == pg.KEYUP:
                 if event.key == pg.K_SPACE:
                     displaySolutions = not displaySolutions
+                elif event.key == pg.K_LEFT:
+                    highlightRegion = (highlightRegion - 1) % puzzleLen
+                elif event.key == pg.K_RIGHT:
+                    highlightRegion = (highlightRegion + 1) % puzzleLen
 
         screen.fill("white")  # clear screen
 
@@ -104,6 +108,7 @@ async def main(puzzleLen, wordPositions, hints, solution):
 
         pg.display.flip()  # present
         pg.display.update()  # present
+
         await asyncio.sleep(0)  # Very important, and keep it 0
         clock.tick(60)  # limit framerate
 
