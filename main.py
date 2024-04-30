@@ -33,6 +33,8 @@ async def main(puzzleLen, wordPositions, hints, solution):
     displaySolutions = False
     highlightRegion = 3
 
+    currentGuess = ' ' * puzzleLen
+
     # load font:
     font = pg.font.Font(pg.font.get_default_font(), 24)
     solutionFont = pg.font.Font(pg.font.get_default_font(), 36)
@@ -50,6 +52,10 @@ async def main(puzzleLen, wordPositions, hints, solution):
                     highlightRegion = (highlightRegion - 1) % puzzleLen
                 elif event.key == pg.K_RIGHT:
                     highlightRegion = (highlightRegion + 1) % puzzleLen
+                elif event.key == pg.K_BACKSPACE:
+                    currentGuess = currentGuess[:highlightRegion] + ' ' + currentGuess[(highlightRegion + 1):]
+                else:
+                    currentGuess = currentGuess[:highlightRegion] + event.unicode + currentGuess[(highlightRegion + 1):]
 
         screen.fill("white")  # clear screen
 
@@ -93,18 +99,24 @@ async def main(puzzleLen, wordPositions, hints, solution):
 
             screen.blit(textSurface, dest=pos)
 
-        if displaySolutions:  # answers
-            for i in range(len(solution)):
-                textSurface = solutionFont.render(solution[i].upper(), True, (255, 0, 0))
+        if not displaySolutions:
+            onscreenWord = currentGuess
+            renderColor = (0,0,0)
+        else:
+            onscreenWord = solution
+            renderColor = (255,0,0)
 
-                angle = ((i + 0.5) / puzzleLen) * 2.0 * math.pi - math.pi * 0.5
-                rad = PUZZLE_INNER_RAD * 0.75 + PUZZLE_OUTER_RAD * 0.25
-                pos = (
-                    rad * math.cos(angle) + PUZZLE_CENTER[0] - 0.5 * textSurface.get_size()[0],
-                    rad * math.sin(angle) + PUZZLE_CENTER[1] - 0.5 * textSurface.get_size()[1],
-                )
+        for i in range(len(onscreenWord)):
+            textSurface = solutionFont.render(onscreenWord[i].upper(), True, renderColor)
 
-                screen.blit(textSurface, dest=pos)
+            angle = ((i + 0.5) / puzzleLen) * 2.0 * math.pi - math.pi * 0.5
+            rad = PUZZLE_INNER_RAD * 0.75 + PUZZLE_OUTER_RAD * 0.25
+            pos = (
+                rad * math.cos(angle) + PUZZLE_CENTER[0] - 0.5 * textSurface.get_size()[0],
+                rad * math.sin(angle) + PUZZLE_CENTER[1] - 0.5 * textSurface.get_size()[1],
+            )
+
+            screen.blit(textSurface, dest=pos)
 
         pg.display.flip()  # present
         pg.display.update()  # present
