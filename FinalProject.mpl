@@ -7,13 +7,15 @@ with(StringTools):
 
 Help:=proc(): print(` Followers(w,k,n)`):end:
 
+MAX_ITERS := 100;
+
 read `ENGLISH.txt`:
 
 #Followers(w,k,n): inputs a word w outputs all the words of length n that start with the last k letters of w. Try:
 #Followers([d,o,r,o,n],2,5);
 Followers:=proc(w,k,n) local S,G,w1,v:
 
-print(w,k,n);
+#print(w,k,n);
 if k>n or nops(w) <= k then
  RETURN({}):
 fi:
@@ -65,12 +67,16 @@ end:
 AppendFollowerToPuzzle := proc(puzzle, minWordOverlap, overlapRand, wordLenRand):
 	followers := {};
 	overlapCurrentRand := overlapRand();
+	iters := 0;
 	while followers = {} do:
+		if iters = MAX_ITERS then:
+			return FAIL;
+		fi:
 		followers := Followers(puzzle[-1], overlapCurrentRand, wordLenRand());
-		print(overlapCurrentRand);
 		if overlapCurrentRand > minWordOverlap then:
 			overlapCurrentRand--;
 		fi:
+		iters++;
 	od:
 	chosenAddition := puzzle[1]; 	
 	while member(chosenAddition, puzzle) do:
