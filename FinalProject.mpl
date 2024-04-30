@@ -15,7 +15,7 @@ read `ENGLISH.txt`:
 Followers:=proc(w,k,n) local S,G,w1,v:
 
 print(w,k,n);
-if k>n then
+if k>n or nops(w) <= k then
  RETURN({}):
 fi:
 
@@ -43,7 +43,8 @@ end:
 # it won't check start or end for anything
 SubsetWords := proc(n, startL, endL) local words, outWords, word:
 	outWords := {};
-	if nops(n) < nops(startL) or nops(n) < nops(endL) then
+	if n < nops(startL) or n < nops(endL) then
+		print("hi");
 		return {};
 	fi:
 
@@ -91,39 +92,19 @@ GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, m
 	od:
 
 	# Keep adding words until we complete the puzzle.
-	finishingWords := {};
-	# The last word must begin with a subset of the end of the current last word
-	lastPuzzleSlice := puzzle[-1][(nops(puzzle[-1])-rand(minWordOverlap..maxWordOverlap)()+1)...nops(puzzle[-1])];
-	# The last word must end with a subset of the beginning of the first word
-	firstPuzzleSlice := puzzle[1][1..rand(minWordOverlap..maxWordOverlap)()];
-	while finishingWords = {} do:
-
-		print(lastPuzzleSlice, firstPuzzleSlice);
-
-		# TODO: How do we choose how many letters the last puzzle word should have as overlap
-		# with the first puzzle word?
-
-		finishingWords := SubsetWords(wordLenRand(), lastPuzzleSlice, firstPuzzleSlice);
-
-		removeFrom := rand(1..2)();
-		oldLastNops := nops(lastPuzzleSlice);
-		oldFirstNops := nops(firstPuzzleSlice);
-
-		if removeFrom = 1 and oldLastNops > 1 then:
-			lastPuzzleSlice := lastPuzzleSlice[2..nops(lastPuzzleSlice)];
-		elif oldFirstNops > 1 then:
-			firstPuzzleSlice := firstPuzzleSlice[1..nops(firstPuzzleSlice)-1];
-		end:
-
-		print(oldLastNops, oldFirstNops);
-
-		if oldLastNops = minWordOverlap and oldFirstNops = minWordOverlap and finishingWords = {} then:
-			puzzle := AppendFollowerToPuzzle(puzzle, overlapRand(), wordLenRand());
-
-			lastPuzzleSlice := puzzle[-1][(nops(puzzle[-1])-rand(minWordOverlap..maxWordOverlap)()+1)...nops(puzzle[-1])];
-			firstPuzzleSlice := puzzle[1][1..rand(minWordOverlap..maxWordOverlap)()];
-		fi:
-	od:
+	finishingWords := {seq(seq(seq(op(SubsetWords(i1 + 1, puzzle[-1][-j1..], puzzle[1][1..k1])), i1=maxWordLength..minWordLength, -1),
+				j1=maxWordOverlap..minWordOverlap, -1), k1=maxWordOverlap..minWordOverlap, -1) };
+	# Try all combinations
+	(*for i1 from maxWordLength to minWordLength by -1 do:
+		print(i1);
+		for j1 from maxWordOverlap to minWordOverlap by -1 do:
+			print(k1);
+			for k1 from maxWordOverlap to minWordOverlap by -1 do:
+				print(i1, j1, k1);
+				finishingWords := finishingWords union ;
+			od:
+		od:
+	od:*)
 
 	puzzle := [ op(puzzle), finishingWords[rand(1..nops(finishingWords))()] ];
 	return puzzle;
