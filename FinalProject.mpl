@@ -164,7 +164,7 @@ end:
 PuzzleToJSON := proc(puzzle, constraintsFile, outputDir):
 	constraints      := JSON:-Import(constraintsFile);
 
-	starterWordPool  := ENG()[rand(constraints["starterWordMinLength"]..constraints["starterWordMaxLength"])()]
+	starterWordPool  := ENG()[rand(constraints["starterWordMinLength"]..constraints["starterWordMaxLength"])()];
 	starterWord      := starterWordPool[rand(1..nops(starterWordPool))()];
 	
 	generatedPuzzles := 0;
