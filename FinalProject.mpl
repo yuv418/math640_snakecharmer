@@ -1,10 +1,9 @@
-# Homework 23: We set up a communication means and began planning the project, and updated the 
-# file with our names and project information
-
 # Project 3: Snake Charmer
 # Members: Ramesh Balaji, Daniel Elwell, Nuray Kutlu
 
 # The following is adapted from Dr. Z's template.
+
+with(StringTools):
 
 Help:=proc(): print(` Followers(w,k,n)`):end:
 
@@ -130,6 +129,13 @@ GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, m
 		return FAIL;
 	fi:
 
+end:
+
+# PuzzleToStringArray(puzzle)
+# Given a puzzle in the form [[w,o,r,d], [d,o,w]], it will convert this
+# to the string form: ["word", "dow"].
+PuzzleToStringArray := proc(puzzle):
+	return [seq(Join(puzzle[i], ""), i=1..nops(puzzle))];
 end:
 
 # PuzzleToJSON(puzzle, constraintsFile, outputFile):
