@@ -31,9 +31,9 @@ async def main(puzzleLen, wordPositions, hints, solution):
     running = True
 
     displaySolutions = False
-    highlightRegion = 3
+    highlightRegion = 0
 
-    currentGuess = ' ' * puzzleLen
+    currentGuess = " " * puzzleLen
 
     # load font:
     font = pg.font.Font(pg.font.get_default_font(), 24)
@@ -52,10 +52,10 @@ async def main(puzzleLen, wordPositions, hints, solution):
                     highlightRegion = (highlightRegion - 1) % puzzleLen
                 elif event.key == pg.K_RIGHT:
                     highlightRegion = (highlightRegion + 1) % puzzleLen
-                elif event.key == pg.K_BACKSPACE:
-                    currentGuess = currentGuess[:highlightRegion] + ' ' + currentGuess[(highlightRegion + 1):]
-                else:
-                    currentGuess = currentGuess[:highlightRegion] + event.unicode + currentGuess[(highlightRegion + 1):]
+                elif event.key == pg.K_BACKSPACE and not displaySolutions:
+                    currentGuess = currentGuess[:highlightRegion] + " " + currentGuess[(highlightRegion + 1) :]
+                elif not displaySolutions:
+                    currentGuess = currentGuess[:highlightRegion] + event.unicode + currentGuess[(highlightRegion + 1) :]
 
         screen.fill("white")  # clear screen
 
@@ -99,15 +99,15 @@ async def main(puzzleLen, wordPositions, hints, solution):
 
             screen.blit(textSurface, dest=pos)
 
-        if not displaySolutions:
-            onscreenWord = currentGuess
-            renderColor = (0,0,0)
-        else:
-            onscreenWord = solution
-            renderColor = (255,0,0)
+        for i in range(len(currentGuess)):
+            renderColor = (0, 0, 0) if currentGuess != solution else (0, 255, 0)
+            onscreenChar = currentGuess[i]
 
-        for i in range(len(onscreenWord)):
-            textSurface = solutionFont.render(onscreenWord[i].upper(), True, renderColor)
+            if displaySolutions and currentGuess[i] != solution[i]:
+                renderColor = (255, 0, 0)
+                onscreenChar = solution[i]
+
+            textSurface = solutionFont.render(onscreenChar.upper(), True, renderColor)
 
             angle = ((i + 0.5) / puzzleLen) * 2.0 * math.pi - math.pi * 0.5
             rad = PUZZLE_INNER_RAD * 0.75 + PUZZLE_OUTER_RAD * 0.25
