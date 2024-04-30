@@ -14,8 +14,9 @@ read `ENGLISH.txt`:
 #Followers([d,o,r,o,n],2,5);
 Followers:=proc(w,k,n) local S,G,w1,v:
 
+print(w,k,n);
 if k>n then
- RETURN(FAIL):
+ RETURN({}):
 fi:
 
 w1:=[op(nops(w)-k+1..nops(w),w)]:
@@ -42,6 +43,10 @@ end:
 # it won't check start or end for anything
 SubsetWords := proc(n, startL, endL) local words, outWords, word:
 	outWords := {};
+	if nops(n) < nops(startL) or nops(n) < nops(endL) then
+		return {};
+	fi:
+
 	words:=ENG()[n];	
 	for word in words do:
 		if word[..nops(startL)] = startL and word[(nops(word) - nops(endL) + 1)..] = endL then:
@@ -59,18 +64,26 @@ end:
 
 AppendFollowerToPuzzle := proc(puzzle, overlapRand, wordLenRand):
 	followers := {};
+	overlapCurrentRand := overlapRand();
 	while followers = {} do:
-		followers := Followers(puzzle[-1], overlapRand(), wordLenRand());
+		followers := Followers(puzzle[-1], overlapCurrentRand, wordLenRand());
+		if overlapCurrentRand > 1 then:
+			overlapCurrentRand--;
+		fi:
 	od:
-	puzzleMod := [op(puzzle), followers[rand(1..nops(followers))()]];
+	chosenAddition := puzzle[1]; 	
+	while member(chosenAddition, puzzle) do:
+		chosenAddition := followers[rand(1..nops(followers))()];
+	od:
+	puzzleMod := [op(puzzle), chosenAddition];
 	return puzzleMod;
 end:
 
-GeneratePuzzle := proc(starterWord, minLength, maxWordOverlap, minWordLength, maxWordLength):
+GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength):
 	puzzle := [starterWord];
 
 	wordsLeft := minLength;	
-	overlapRand := rand(1..maxWordOverlap);
+	overlapRand := rand(minWordOverlap..maxWordOverlap);
 	wordLenRand := rand(minWordLength..maxWordLength);
 	while wordsLeft <> 1 do:
 		puzzle := AppendFollowerToPuzzle(puzzle, overlapRand, wordLenRand);
@@ -79,12 +92,37 @@ GeneratePuzzle := proc(starterWord, minLength, maxWordOverlap, minWordLength, ma
 
 	# Keep adding words until we complete the puzzle.
 	finishingWords := {};
+	# The last word must begin with a subset of the end of the current last word
+	lastPuzzleSlice := puzzle[-1][(nops(puzzle[-1])-rand(minWordOverlap..maxWordOverlap)()+1)...nops(puzzle[-1])];
+	# The last word must end with a subset of the beginning of the first word
+	firstPuzzleSlice := puzzle[1][1..rand(minWordOverlap..maxWordOverlap)()];
 	while finishingWords = {} do:
-		puzzle := AppendFollowerToPuzzle(puzzle, overlapRand(), wordLenRand());
+
+		print(lastPuzzleSlice, firstPuzzleSlice);
 
 		# TODO: How do we choose how many letters the last puzzle word should have as overlap
 		# with the first puzzle word?
-		finishingWords := SubsetWords(wordLenRand(), puzzle[-1][nops(puzzle[-1])...nops(puzzle[-1])], puzzle[1][1..1]);
+
+		finishingWords := SubsetWords(wordLenRand(), lastPuzzleSlice, firstPuzzleSlice);
+
+		removeFrom := rand(1..2)();
+		oldLastNops := nops(lastPuzzleSlice);
+		oldFirstNops := nops(firstPuzzleSlice);
+
+		if removeFrom = 1 and oldLastNops > 1 then:
+			lastPuzzleSlice := lastPuzzleSlice[2..nops(lastPuzzleSlice)];
+		elif oldFirstNops > 1 then:
+			firstPuzzleSlice := firstPuzzleSlice[1..nops(firstPuzzleSlice)-1];
+		end:
+
+		print(oldLastNops, oldFirstNops);
+
+		if oldLastNops = minWordOverlap and oldFirstNops = minWordOverlap and finishingWords = {} then:
+			puzzle := AppendFollowerToPuzzle(puzzle, overlapRand(), wordLenRand());
+
+			lastPuzzleSlice := puzzle[-1][(nops(puzzle[-1])-rand(minWordOverlap..maxWordOverlap)()+1)...nops(puzzle[-1])];
+			firstPuzzleSlice := puzzle[1][1..rand(minWordOverlap..maxWordOverlap)()];
+		fi:
 	od:
 
 	puzzle := [ op(puzzle), finishingWords[rand(1..nops(finishingWords))()] ];
