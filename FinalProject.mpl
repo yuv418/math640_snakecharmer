@@ -58,17 +58,18 @@ SubsetWords := proc(n, startL, endL) local words, outWords, word:
 	return outWords;
 end:
 
-# GeneratePuzzle(starterWord, minLength, maxWordOverlap, minWordLength, maxWordLength)
-# Generate a snake charmer puzzle that has a starter word, then uses Followers (where the k value is randomly chosen between 1 and maxWordOverlap) to repeatedly 
-# generate words until minLength is hit, then try to keep choosing words until there exists one that overlaps with the first word (currently only 1 letter overlap).
-# Every word in the puzzle has length bounded by [minWordLength, maxWordLength]
+# GeneratePuzzle(starterWord, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength)
+# Generate a snake charmer puzzle that has a starter word, then uses Followers (where the k value is randomly chosen between minWordOverlap and maxWordOverlap) 
+# to repeatedly generate words until minLength is hit, then try to keep choosing words until there exists one that overlaps with the first word (currently only 
+# 1 letter overlap). Every word in the puzzle has length bounded by [minWordLength, maxWordLength].
 
-AppendFollowerToPuzzle := proc(puzzle, overlapRand, wordLenRand):
+AppendFollowerToPuzzle := proc(puzzle, minWordOverlap, overlapRand, wordLenRand):
 	followers := {};
 	overlapCurrentRand := overlapRand();
 	while followers = {} do:
 		followers := Followers(puzzle[-1], overlapCurrentRand, wordLenRand());
-		if overlapCurrentRand > 1 then:
+		print(overlapCurrentRand);
+		if overlapCurrentRand > minWordOverlap then:
 			overlapCurrentRand--;
 		fi:
 	od:
@@ -86,19 +87,26 @@ CalculateFinishingWords := proc(puzzle, minWordLength, maxWordLength, minWordOve
 end:
 
 GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength, loosenConstraintsForLastWord := true):
+	if minWordOverlap > minWordLength or maxWordOverlap > minWordLength then:
+		return FAIL:
+	fi:
 	puzzle := [starterWord];
 
 	wordsLeft := minLength;	
 	overlapRand := rand(minWordOverlap..maxWordOverlap);
 	wordLenRand := rand(minWordLength..maxWordLength);
 	while wordsLeft <> 1 do:
-		puzzle := AppendFollowerToPuzzle(puzzle, overlapRand, wordLenRand);
+		puzzle := AppendFollowerToPuzzle(puzzle, minWordOverlap, overlapRand, wordLenRand);
+		if puzzle = FAIL then:
+			return FAIL;
+		fi:
 		wordsLeft -= 1;
 	od:
 
 	# Find all possible terminating with the constraints given
 	finishingWords := CalculateFinishingWords(puzzle, minWordLength, maxWordLength, minWordOverlap, maxWordOverlap, 
 							minWordOverlap, maxWordOverlap);
+	print(finishingWords);
 	# If there were no words, then we can loosen the constraints a little bit.
 	if finishingWords = {} and loosenConstraintsForLastWord then:
 		for l1 from minWordLength to 1 by -1 do:
@@ -123,3 +131,19 @@ GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, m
 	fi:
 
 end:
+
+# PuzzleToJSON(puzzle, constraintsFile, outputFile):
+# Uses https://www.maplesoft.com/support/help/maple/view.aspx?path=Formats%2FJSON
+# Given an input constraintsFile in the following format
+# { "starterWord": "word",
+#   "minLength": 0, 
+#   "minWordOverlap": 0, 
+#   "maxWordOverlap": 0, 
+#   "minWordLength":  0, 
+#   "maxWordLength":  0, 
+#   "loosenConstraintsForLastWord": true } 
+# Outputs a file to outputFile in the following format (for the Python program):
+# { "startingPositionsOfWords": [0, 5],
+#   "puzzleString": "helloworld",  
+#   "puzzleLength": 10,
+#   "hints": ["greeting", "globe"] }
