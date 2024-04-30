@@ -52,7 +52,7 @@ SubsetWords := proc(n, startL, endL) local words, outWords, word:
 	words:=ENG()[n];	
 	for word in words do:
 		if word[..nops(startL)] = startL and word[(nops(word) - nops(endL) + 1)..] = endL then:
-			outWords := outWords union {word};
+			outWords := outWords union {[word, nops(startL)]};
 		fi:
 	od:
 
@@ -123,8 +123,15 @@ GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, m
 				finishingWords := CalculateFinishingWords(puzzle, minWordLength, maxWordLength, l1, maxWordOverlap, m1, maxWordOverlap);
 				#update startingPos arr
 				if finishingWords <> {} then:
-					puzzle := [ op(puzzle), finishingWords[rand(1..nops(finishingWords))()] ];
-					return puzzle;
+					wordAndOverlap := finishingWords[rand(1..nops(finishingWords))()];
+
+					finishingWord  := wordAndOverlap[1];
+					overlap        := wordAndOverlap[2];
+
+					puzzle         := [ op(puzzle), finishingWord ];
+					startingPos    := [ op(startingPos), overlap ];
+
+					return puzzle, startingPos;
 				fi:
 			od:
 		od:
@@ -132,8 +139,15 @@ GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, m
 		return FAIL;
 	elif finishingWords <> {} then:
 		#update startingPos arr
-		puzzle := [ op(puzzle), finishingWords[rand(1..nops(finishingWords))()] ];
-		return puzzle;
+		wordAndOverlap := finishingWords[rand(1..nops(finishingWords))()];
+
+		finishingWord  := wordAndOverlap[1];
+		overlap        := wordAndOverlap[2];
+
+		puzzle         := [ op(puzzle), finishingWord ];
+		startingPos    := [ op(startingPos), overlap ];
+
+		return puzzle, startingPos;
 
 	else:
 		return FAIL;
