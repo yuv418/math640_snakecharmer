@@ -147,15 +147,25 @@ end:
 # PuzzleToJSON(puzzle, constraintsFile, outputFile):
 # Uses https://www.maplesoft.com/support/help/maple/view.aspx?path=Formats%2FJSON
 # Given an input constraintsFile in the following format
-# { "starterWord": "word",
-#   "minLength": 0, 
-#   "minWordOverlap": 0, 
-#   "maxWordOverlap": 0, 
-#   "minWordLength":  0, 
-#   "maxWordLength":  0, 
+# { "starterWordMinLength": 0 
+#   "starterWordMaxLength": 0,
+#   "minLength"           : 0, 
+#   "minWordOverlap"      : 0, 
+#   "maxWordOverlap"      : 0, 
+#   "minWordLength"       : 0, 
+#   "maxWordLength"       : 0, 
+#   "puzzlesToGenerate"   : 0 
 #   "loosenConstraintsForLastWord": true } 
 # Outputs a file to outputFile in the following format (for the Python program):
 # { "startingPositionsOfWords": [0, 5],
 #   "puzzleString": "helloworld",  
 #   "puzzleLength": 10,
 #   "hints": ["greeting", "globe"] }
+PuzzleToJSON := proc(puzzle, constraintsFile, outputDir):
+	constraints      := JSON:-Import(constraintsFile);
+
+	starterWordPool  := ENG()[rand(constraints["starterWordMinLength"]..constraints["starterWordMaxLength"])()]
+	starterWord      := starterWordPool[rand(1..nops(starterWordPool))()];
+	
+	generatedPuzzles := 0;
+end
