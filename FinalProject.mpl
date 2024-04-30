@@ -80,7 +80,12 @@ AppendFollowerToPuzzle := proc(puzzle, overlapRand, wordLenRand):
 	return puzzleMod;
 end:
 
-GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength):
+CalculateFinishingWords := proc(puzzle, minWordLength, maxWordLength, minWordOverlap1, maxWordOverlap1, minWordOverlap2, maxWordOverlap2):
+	return {seq(seq(seq(op(SubsetWords(i1 + 1, puzzle[-1][-j1..], puzzle[1][..k1])), k1=maxWordOverlap2..minWordOverlap2, -1),
+				j1=maxWordOverlap1..minWordOverlap1, -1), i1=maxWordLength..minWordLength, -1) };
+end:
+
+GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength, loosenConstraintsForLastWord := true):
 	puzzle := [starterWord];
 
 	wordsLeft := minLength;	
@@ -91,17 +96,30 @@ GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, m
 		wordsLeft -= 1;
 	od:
 
-	# Keep adding words until we complete the puzzle.
-	finishingWords := {seq(seq(seq(op(SubsetWords(i1 + 1, puzzle[-1][-j1..], puzzle[1][1..k1])), i1=maxWordLength..minWordLength, -1),
-				j1=maxWordOverlap..minWordOverlap, -1), k1=maxWordOverlap..minWordOverlap, -1) };
+	# Find all possible terminating with the constraints given
+	finishingWords := CalculateFinishingWords(puzzle, minWordLength, maxWordLength, minWordOverlap, maxWordOverlap, 
+							minWordOverlap, maxWordOverlap);
+	# If there were no words, then we can loosen the constraints a little bit.
+	if finishingWords = {} and loosenConstraintsForLastWord then:
+		for l1 from minWordLength to 1 by -1 do:
+			for m1 from l1 to 1 by -1 do:
+				finishingWords := CalculateFinishingWords(puzzle, minWordLength, maxWordLength, l1, maxWordOverlap, m1, maxWordOverlap);
 
-	puzzle := [ op(puzzle), finishingWords[rand(1..nops(finishingWords))()] ];
-	return puzzle;
+				if finishingWords <> {} then:
+					puzzle := [ op(puzzle), finishingWords[rand(1..nops(finishingWords))()] ];
+					return puzzle;
+				fi:
+			od:
+		od:
+
+		return FAIL;
+	elif finishingWords <> {} then:
+
+		puzzle := [ op(puzzle), finishingWords[rand(1..nops(finishingWords))()] ];
+		return puzzle;
+
+	else:
+		return FAIL;
+	fi:
+
 end:
-
-# Potential TODO:
-
-# Choose a starter word -> generate a puzzle of N words
-# Maybe call it GeneratePuzzle(StarterWord, N), or something like that.
-
-# Draw the puzzle
