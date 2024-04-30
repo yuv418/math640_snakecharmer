@@ -94,17 +94,6 @@ GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, m
 	# Keep adding words until we complete the puzzle.
 	finishingWords := {seq(seq(seq(op(SubsetWords(i1 + 1, puzzle[-1][-j1..], puzzle[1][1..k1])), i1=maxWordLength..minWordLength, -1),
 				j1=maxWordOverlap..minWordOverlap, -1), k1=maxWordOverlap..minWordOverlap, -1) };
-	# Try all combinations
-	(*for i1 from maxWordLength to minWordLength by -1 do:
-		print(i1);
-		for j1 from maxWordOverlap to minWordOverlap by -1 do:
-			print(k1);
-			for k1 from maxWordOverlap to minWordOverlap by -1 do:
-				print(i1, j1, k1);
-				finishingWords := finishingWords union ;
-			od:
-		od:
-	od:*)
 
 	puzzle := [ op(puzzle), finishingWords[rand(1..nops(finishingWords))()] ];
 	return puzzle;
