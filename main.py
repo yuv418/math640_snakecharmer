@@ -46,7 +46,8 @@ async def main(puzzleLen, wordPositions, hints, solution):
                 running = False
 
             if event.type == pg.KEYUP:
-                if event.key == pg.K_SPACE:
+                print(f"solution {solution} currentGuess {currentGuess}")
+                if event.key == pg.K_SPACE and solution != currentGuess:
                     displaySolutions = not displaySolutions
                 elif event.key == pg.K_LEFT:
                     highlightRegion = (highlightRegion - 1) % puzzleLen
@@ -54,7 +55,7 @@ async def main(puzzleLen, wordPositions, hints, solution):
                     highlightRegion = (highlightRegion + 1) % puzzleLen
                 elif event.key == pg.K_BACKSPACE and not displaySolutions:
                     currentGuess = currentGuess[:highlightRegion] + " " + currentGuess[(highlightRegion + 1) :]
-                elif not displaySolutions:
+                elif not displaySolutions and event.key != pg.K_SPACE:
                     currentGuess = currentGuess[:highlightRegion] + event.unicode + currentGuess[(highlightRegion + 1) :]
 
         screen.fill("white")  # clear screen
