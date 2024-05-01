@@ -5,7 +5,14 @@
 
 with(StringTools):
 
-Help:=proc(): print(` Followers(w,k,n)`):end:
+Help:=proc(): 
+print(` Followers(w,k,n), SubsetWords(n, startL, endL), AppendFollowerToPuzzle(puzzle, minWordOverlap, overlapRand, wordLenRand),`):
+print(` CalculateFinishingWords(puzzle, minWordLength, maxWordLength, minWordOverlap1, maxWordOverlap1, minWordOverlap2, maxWordOverlap2),`):
+print(` GeneratePuzzle(starterWord, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength, loosenConstraintsForLastWord := true),`):
+print(` PuzzleToStringArray(puzzle), PuzzleStringArrayToString(puzzle), GeneratePuzzleToJSON(i1, outputDir, starterWordMinLength, starterWordMaxLength, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength),`):
+print(` PuzzlesToJSON(constraintsFile, outputDir)`):
+end:
+
 
 MAX_ITERS := 100;
 
@@ -58,10 +65,6 @@ SubsetWords := proc(n, startL, endL) local words, outWords, word:
 	return outWords;
 end:
 
-# GeneratePuzzle(starterWord, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength)
-# Generate a snake charmer puzzle that has a starter word, then uses Followers (where the k value is randomly chosen between minWordOverlap and maxWordOverlap) 
-# to repeatedly generate words until minLength is hit, then try to keep choosing words until there exists one that overlaps with the first word (currently only 
-# 1 letter overlap). Every word in the puzzle has length bounded by [minWordLength, maxWordLength].
 
 AppendFollowerToPuzzle := proc(puzzle, minWordOverlap, overlapRand, wordLenRand) local followers, overlapCurrentRand, wordOverlap, iters, chosenAddition, isSuperset, puzzleMod:
 	followers := {};
@@ -99,6 +102,10 @@ CalculateFinishingWords := proc(puzzle, minWordLength, maxWordLength, minWordOve
 	return {seq(seq(seq(op(SubsetWords(i1 + 1, puzzle[-1][-j1..], puzzle[1][..k1])), k1=maxWordOverlap2..minWordOverlap2, -1),
 				j1=maxWordOverlap1..minWordOverlap1, -1), i1=maxWordLength..minWordLength, -1) };
 end:
+# GeneratePuzzle(starterWord, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength)
+# Generate a snake charmer puzzle that has a starter word, then uses Followers (where the k value is randomly chosen between minWordOverlap and maxWordOverlap) 
+# to repeatedly generate words until minLength is hit, then try to keep choosing words until there exists one that overlaps with the first word (currently only 
+# 1 letter overlap). Every word in the puzzle has length bounded by [minWordLength, maxWordLength].
 
 GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength, loosenConstraintsForLastWord := true) local puzzle, startingPos, puzzleString, wordsLeft, overlapRand, wordLenRand, update, overlap, finishingWords, l1, m1, wordAndOverlap, finishingWord:
 	if minWordOverlap > minWordLength or maxWordOverlap > minWordLength then:
@@ -183,26 +190,10 @@ end:
 # Given a puzzle in the form [w,o,r,d,o,w], it will convert this
 # to the string form: "wordow".
 PuzzleStringArrayToString := proc(puzzle) local i1:
-	return Join([ seq(convert(puzzle[i1], string), i=1..nops(puzzle)) ], "");
+	return Join([ seq(convert(puzzle[i1], string), i1=1..nops(puzzle)) ], "");
 end:
 
-# PuzzleToJSON(puzzle, constraintsFile, outputFile):
-# Uses https://www.maplesoft.com/support/help/maple/view.aspx?path=Formats%2FJSON
-# Given an input constraintsFile in the following format
-# { "starterWordMinLength": 0 
-#   "starterWordMaxLength": 0,
-#   "minLength"           : 0, 
-#   "minWordOverlap"      : 0, 
-#   "maxWordOverlap"      : 0, 
-#   "minWordLength"       : 0, 
-#   "maxWordLength"       : 0, 
-#   "puzzlesToGenerate"   : 0 
-#   "loosenConstraintsForLastWord": true } 
-# Outputs a file to outputFile in the following format (for the Python program):
-# { "startingPositionsOfWords": [0, 5],
-#   "puzzleString": "helloworld",  
-#   "puzzleLength": 10,
-#   "hints": ["greeting", "globe"] }
+
 GeneratePuzzleToJSON := proc(i1, outputDir, starterWordMinLength, starterWordMaxLength, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength) local fileName, path, starterWordPool, starterWord, puzzle, puzzleFile:
 	fileName:= cat("puzzle", convert(i1, string), ".json"):
 	path:= cat(outputDir, "/", fileName):
@@ -230,7 +221,23 @@ GeneratePuzzleToJSON := proc(i1, outputDir, starterWordMinLength, starterWordMax
 
 	Export(path, puzzleFile, "JSON"):
 end:
-
+# PuzzleToJSON(puzzle, constraintsFile, outputFile):
+# Uses https://www.maplesoft.com/support/help/maple/view.aspx?path=Formats%2FJSON
+# Given an input constraintsFile in the following format
+# { "starterWordMinLength": 0 
+#   "starterWordMaxLength": 0,
+#   "minLength"           : 0, 
+#   "minWordOverlap"      : 0, 
+#   "maxWordOverlap"      : 0, 
+#   "minWordLength"       : 0, 
+#   "maxWordLength"       : 0, 
+#   "puzzlesToGenerate"   : 0 
+#   "loosenConstraintsForLastWord": true } 
+# Outputs a file to outputFile in the following format (for the Python program):
+# { "startingPositionsOfWords": [0, 5],
+#   "puzzleString": "helloworld",  
+#   "puzzleLength": 10,
+#   "hints": ["greeting", "globe"] }
 PuzzlesToJSON := proc(constraintsFile, outputDir) local puzzles, constraints, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength, puzzlesToGenerate, starterWordMinLength, starterWordMaxLength, ids, i1, id:
 	puzzles:= []:
 	constraints       := Import(constraintsFile);
