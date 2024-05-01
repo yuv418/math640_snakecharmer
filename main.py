@@ -144,4 +144,4 @@ if __name__ == "__main__":
         puzzleRead = json.load(puzzleFile)
 
     
-    asyncio.run(main(puzzleRead['puzzleLength'] - 1, puzzleRead['startingPositionsOfWords'], puzzleRead['hints'], puzzleRead['puzzleWord'], puzzleRead['puzzleString'][:-1]]))
+    asyncio.run(main(puzzleRead['puzzleLength'] - 1, puzzleRead['startingPositionsOfWords'], puzzleRead['hints'], puzzleRead['puzzleWord'], puzzleRead['puzzleString'][:-1]))
