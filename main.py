@@ -35,7 +35,7 @@ async def main(puzzleLen, wordPositions, hints, words, solution):
     displaySolutions = False
     highlightRegion = 0
 
-    currentGuess = " " * puzzleLen
+    currentGuess = " " * len(solution)
 
     # load font:
     font = pg.font.Font(pg.font.get_default_font(), 24)
@@ -56,7 +56,7 @@ async def main(puzzleLen, wordPositions, hints, words, solution):
                     highlightRegion = (highlightRegion + 1) % puzzleLen
                 elif event.key == pg.K_BACKSPACE and not displaySolutions:
                     currentGuess = currentGuess[:highlightRegion] + " " + currentGuess[(highlightRegion + 1) :]
-                elif not displaySolutions and event.key != pg.K_SPACE:
+                elif not displaySolutions and event.key != pg.K_SPACE and event.unicode != "":
                     currentGuess = currentGuess[:highlightRegion] + event.unicode + currentGuess[(highlightRegion + 1) :]
 
         screen.fill("white")  # clear screen
@@ -101,10 +101,11 @@ async def main(puzzleLen, wordPositions, hints, words, solution):
 
             screen.blit(textSurface, dest=pos)
 
-        for i in range(len(currentGuess)):
+        for i in range(len(solution)):
             renderColor = (0, 0, 0) if currentGuess != solution else (0, 255, 0)
             onscreenChar = currentGuess[i]
 
+            print(currentGuess, solution)
             if displaySolutions and currentGuess[i] != solution[i]:
                 renderColor = (255, 0, 0)
                 onscreenChar = solution[i]
@@ -140,12 +141,23 @@ if __name__ == "__main__":
         exit(1)
 
     puzzleRead = None
+    #puzJson = '{"generatedHints": true, "puzzleLength": 23, "puzzleString": "platentyrantsarsonstomp", "puzzleWord": ["plat", "latent", "tenty", "tyrant", "ants", "tsar", "arsons", "stomp"], "startingPositionsOfWords": [0, 1, 3, 6, 9, 11, 13, 18], "hints": ["Solid base of a foundation or floor plan.", "Unexpressed potential waiting to emerge fully.", "Fingers extended on either side of the palm", "Ruthless leader known for oppression.", "Insects that march in lines often", "Autocratic ruler of Russia\'s imperial era.", "Incendiary criminal activities often involve these perpetrators", "Energetic footwork often accompanies loud music"]}'
+
     with open(sys.argv[1]) as puzzleFile:
         puzzleRead = json.load(puzzleFile)
+    puzzleRead = json.loads(puzJson)
 
-    
     # We messed up the puzzleString so we have to do this:
     off = 1
-    while puzzleRead['puzzleWord'][-1].endswith(puzzleRead['puzzleWord'][1][:off]):
+    while puzzleRead["puzzleWord"][-1].endswith(puzzleRead["puzzleWord"][1][:off]):
         off += 1
-    asyncio.run(main(puzzleRead['puzzleLength'] - off, puzzleRead['startingPositionsOfWords'], puzzleRead['hints'], puzzleRead['puzzleWord'], puzzleRead['puzzleString'][:-off]))
+    print(off)
+    asyncio.run(
+        main(
+            puzzleRead["puzzleLength"] - off,
+            puzzleRead["startingPositionsOfWords"],
+            puzzleRead["hints"],
+            puzzleRead["puzzleWord"],
+            puzzleRead["puzzleString"][:-off],
+        )
+    )
