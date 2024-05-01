@@ -3,6 +3,7 @@ import asyncio
 import math
 import json
 import sys
+import platform
 
 # rendering parameters
 RESOLUTION = (1100, 1100)  # aspect ratio of a sheet of paper
@@ -136,16 +137,20 @@ if __name__ == "__main__":
     # - list of hints
     # - final solution string
 
-    if len(sys.argv) < 2:
-        print("Usage: python main.py puzzle_file.json")
-        exit(1)
+    fl = None
+    if sys.platform == "emscripten":
+        fl = str(platform.window.location).split("?")[1].split("=")[1]
+    else:
+        if len(sys.argv) < 2:
+            print("Usage: python main.py puzzle_file.json")
+            exit(1)
+        fl = sys.argv[1]
+    print(fl)
 
     puzzleRead = None
-    #puzJson = '{"generatedHints": true, "puzzleLength": 23, "puzzleString": "platentyrantsarsonstomp", "puzzleWord": ["plat", "latent", "tenty", "tyrant", "ants", "tsar", "arsons", "stomp"], "startingPositionsOfWords": [0, 1, 3, 6, 9, 11, 13, 18], "hints": ["Solid base of a foundation or floor plan.", "Unexpressed potential waiting to emerge fully.", "Fingers extended on either side of the palm", "Ruthless leader known for oppression.", "Insects that march in lines often", "Autocratic ruler of Russia\'s imperial era.", "Incendiary criminal activities often involve these perpetrators", "Energetic footwork often accompanies loud music"]}'
 
-    with open(sys.argv[1]) as puzzleFile:
+    with open(fl) as puzzleFile:
         puzzleRead = json.load(puzzleFile)
-    puzzleRead = json.loads(puzJson)
 
     # We messed up the puzzleString so we have to do this:
     off = 1
