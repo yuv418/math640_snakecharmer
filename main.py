@@ -5,7 +5,7 @@ import json
 import sys
 
 # rendering parameters
-RESOLUTION = (850, 1100)  # aspect ratio of a sheet of paper
+RESOLUTION = (1100, 1100)  # aspect ratio of a sheet of paper
 PUZZLE_CENTER = (RESOLUTION[0] * 0.5, RESOLUTION[1] * 0.33)
 PUZZLE_OUTER_RAD = 350
 PUZZLE_INNER_RAD = 250
@@ -16,7 +16,7 @@ HINT_START_POS = (RESOLUTION[0] * 0.025, RESOLUTION[1] * 0.7)
 HINT_VERTICAL_STRIDE = 35
 
 
-async def main(puzzleLen, wordPositions, hints, solution):
+async def main(puzzleLen, wordPositions, hints, words, solution):
     # simple error checking:
     if len(wordPositions) != len(hints):
         print("input error")
@@ -95,7 +95,7 @@ async def main(puzzleLen, wordPositions, hints, solution):
             screen.blit(textSurface, dest=pos)
 
         for i in range(len(hints)):  # hints
-            textSurface = font.render("{0}. ".format(i + 1) + hints[i], True, (0, 0, 0))
+            textSurface = font.render("{0}. ".format(i + 1) + hints[i] + f" ({len(words[i])} letters)", True, (0, 0, 0))
 
             pos = (HINT_START_POS[0], HINT_START_POS[1] + i * HINT_VERTICAL_STRIDE)
 
@@ -144,4 +144,4 @@ if __name__ == "__main__":
         puzzleRead = json.load(puzzleFile)
 
     
-    asyncio.run(main(puzzleRead['puzzleLength'], puzzleRead['startingPositionsOfWords'], puzzleRead['hints'], puzzleRead['puzzleString']))
+    asyncio.run(main(puzzleRead['puzzleLength'] - 1, puzzleRead['startingPositionsOfWords'], puzzleRead['hints'], puzzleRead['puzzleWord'], puzzleRead['puzzleString'][:-1]]))
