@@ -1,0 +1,10 @@
+{  "starterWordMinLength"   	  : 6,
+   "starterWordMaxLength"  	  : 6,
+   "minLength"             	  : 12,
+   "minWordOverlap"       	  : 2,
+   "maxWordOverlap"        	  : 3,
+   "minWordLength"        	  : 6,
+   "maxWordLength"                : 9,
+   "puzzlesToGenerate"            : 15,
+   "loosenConstraintsForLastWord" : true }
+
