@@ -175,15 +175,15 @@ end:
 # PuzzleToStringArray(puzzle)
 # Given a puzzle in the form [[w,o,r,d], [d,o,w]], it will convert this
 # to the string form: ["word", "dow"].
-PuzzleToStringArray := proc(puzzle) local i:
-	return [seq(Join(puzzle[i], ""), i=1..nops(puzzle))];
+PuzzleToStringArray := proc(puzzle) local i1:
+	return [seq(Join(puzzle[i1], ""), i1=1..nops(puzzle))];
 end:
 
 # PuzzleStringArrayToString(puzzle)
 # Given a puzzle in the form [w,o,r,d,o,w], it will convert this
 # to the string form: "wordow".
-PuzzleStringArrayToString := proc(puzzle) local i:
-	return Join([ seq(convert(puzzle[i], string), i=1..nops(puzzle)) ], "");
+PuzzleStringArrayToString := proc(puzzle) local i1:
+	return Join([ seq(convert(puzzle[i1], string), i=1..nops(puzzle)) ], "");
 end:
 
 # PuzzleToJSON(puzzle, constraintsFile, outputFile):
