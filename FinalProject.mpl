@@ -15,7 +15,6 @@ read `ENGLISH.txt`:
 #Followers([d,o,r,o,n],2,5);
 Followers:=proc(w,k,n) local S,G,w1,v:
 
-#print(w,k,n);
 if k>n or nops(w) <= k then
  RETURN({}):
 fi:
@@ -64,7 +63,7 @@ end:
 # to repeatedly generate words until minLength is hit, then try to keep choosing words until there exists one that overlaps with the first word (currently only 
 # 1 letter overlap). Every word in the puzzle has length bounded by [minWordLength, maxWordLength].
 
-AppendFollowerToPuzzle := proc(puzzle, minWordOverlap, overlapRand, wordLenRand):
+AppendFollowerToPuzzle := proc(puzzle, minWordOverlap, overlapRand, wordLenRand) local followers, overlapCurrentRand, wordOverlap, iters, chosenAddition, isSuperset, puzzleMod:
 	followers := {};
 	overlapCurrentRand := overlapRand();
 	wordOverlap        := overlapCurrentRand;
@@ -86,7 +85,6 @@ AppendFollowerToPuzzle := proc(puzzle, minWordOverlap, overlapRand, wordLenRand)
 	if nops(chosenAddition) < nops(puzzle[-1]) then:
 		isSuperset := puzzle[-1][1..nops(chosenAddition)] = chosenAddition;
 	fi:
-	# No supersets of previous words!
 	while member(chosenAddition, puzzle) or isSuperset do:
 		chosenAddition := followers[rand(1..nops(followers))()];
 		if nops(chosenAddition) < nops(puzzle[-1]) then:
@@ -97,12 +95,12 @@ AppendFollowerToPuzzle := proc(puzzle, minWordOverlap, overlapRand, wordLenRand)
 	return puzzleMod, wordOverlap;
 end:
 
-CalculateFinishingWords := proc(puzzle, minWordLength, maxWordLength, minWordOverlap1, maxWordOverlap1, minWordOverlap2, maxWordOverlap2):
+CalculateFinishingWords := proc(puzzle, minWordLength, maxWordLength, minWordOverlap1, maxWordOverlap1, minWordOverlap2, maxWordOverlap2) local i1, j1, k1:
 	return {seq(seq(seq(op(SubsetWords(i1 + 1, puzzle[-1][-j1..], puzzle[1][..k1])), k1=maxWordOverlap2..minWordOverlap2, -1),
 				j1=maxWordOverlap1..minWordOverlap1, -1), i1=maxWordLength..minWordLength, -1) };
 end:
 
-GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength, loosenConstraintsForLastWord := true):
+GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength, loosenConstraintsForLastWord := true) local puzzle, startingPos, puzzleString, wordsLeft, overlapRand, wordLenRand, update, overlap, finishingWords, l1, m1, wordAndOverlap, finishingWord:
 	if minWordOverlap > minWordLength or maxWordOverlap > minWordLength then:
 		return FAIL:
 	fi:
@@ -137,7 +135,6 @@ GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, m
 		for l1 from minWordLength to 1 by -1 do:
 			for m1 from l1 to 1 by -1 do:
 				finishingWords := CalculateFinishingWords(puzzle, minWordLength, maxWordLength, l1, maxWordOverlap, m1, maxWordOverlap);
-				#update startingPos arr
 				if finishingWords <> {} then:
 					wordAndOverlap := finishingWords[rand(1..nops(finishingWords))()];
 
@@ -156,7 +153,6 @@ GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, m
 
 		return FAIL;
 	elif finishingWords <> {} then:
-		#update startingPos arr
 		wordAndOverlap := finishingWords[rand(1..nops(finishingWords))()];
 
 		finishingWord  := wordAndOverlap[1];
@@ -179,14 +175,14 @@ end:
 # PuzzleToStringArray(puzzle)
 # Given a puzzle in the form [[w,o,r,d], [d,o,w]], it will convert this
 # to the string form: ["word", "dow"].
-PuzzleToStringArray := proc(puzzle):
+PuzzleToStringArray := proc(puzzle) local i:
 	return [seq(Join(puzzle[i], ""), i=1..nops(puzzle))];
 end:
 
 # PuzzleStringArrayToString(puzzle)
 # Given a puzzle in the form [w,o,r,d,o,w], it will convert this
 # to the string form: "wordow".
-PuzzleStringArrayToString := proc(puzzle):
+PuzzleStringArrayToString := proc(puzzle) local i:
 	return Join([ seq(convert(puzzle[i], string), i=1..nops(puzzle)) ], "");
 end:
 
@@ -207,7 +203,7 @@ end:
 #   "puzzleString": "helloworld",  
 #   "puzzleLength": 10,
 #   "hints": ["greeting", "globe"] }
-GeneratePuzzleToJSON := proc(i1, outputDir, starterWordMinLength, starterWordMaxLength, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength):
+GeneratePuzzleToJSON := proc(i1, outputDir, starterWordMinLength, starterWordMaxLength, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength) local fileName, path, starterWordPool, starterWord, puzzle, puzzleFile:
 	fileName:= cat("puzzle", convert(i1, string), ".json"):
 	path:= cat(outputDir, "/", fileName):
 	if FileTools:-Exists(path) then:
@@ -235,7 +231,7 @@ GeneratePuzzleToJSON := proc(i1, outputDir, starterWordMinLength, starterWordMax
 	Export(path, puzzleFile, "JSON"):
 end:
 
-PuzzlesToJSON := proc(constraintsFile, outputDir):
+PuzzlesToJSON := proc(constraintsFile, outputDir) local puzzles, constraints, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength, puzzlesToGenerate, starterWordMinLength, starterWordMaxLength, ids, i1, id:
 	puzzles:= []:
 	constraints       := Import(constraintsFile);
 
@@ -266,4 +262,3 @@ PuzzlesToJSON := proc(constraintsFile, outputDir):
 		print(cat("Wait ", Threads:-Wait(id)));
 	od:
 end:
-
