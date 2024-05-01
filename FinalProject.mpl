@@ -167,9 +167,17 @@ GeneratePuzzle := proc(starterWord, minLength, minWordOverlap, maxWordOverlap, m
 
 end:
 
+
 # PuzzleToStringArray(puzzle)
 # Given a puzzle in the form [[w,o,r,d], [d,o,w]], it will convert this
 # to the string form: ["word", "dow"].
+PuzzleToStringArray := proc(puzzle):
+	return [seq(Join(puzzle[i], ""), i=1..nops(puzzle))];
+end:
+
+# PuzzleStringArrayToString(puzzle)
+# Given a puzzle in the form [w,o,r,d,o,w], it will convert this
+# to the string form: "wordow".
 PuzzleStringArrayToString := proc(puzzle):
 	return Join([ seq(convert(puzzle[i], string), i=1..nops(puzzle)) ], "");
 end:
@@ -191,6 +199,29 @@ end:
 #   "puzzleString": "helloworld",  
 #   "puzzleLength": 10,
 #   "hints": ["greeting", "globe"] }
+GeneratePuzzleToJSON := proc(i1, outputDir, starterWordMinLength, starterWordMaxLength, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength):
+	# The starter word for every puzzle is different.
+	starterWordPool   := ENG()[rand(starterWordMinLength..starterWordMaxLength)()];
+	starterWord       := starterWordPool[rand(1..nops(starterWordPool))()];
+
+	puzzle 		  := FAIL;
+
+	while puzzle = FAIL do:
+		puzzle := GeneratePuzzle(starterWord, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength):
+	od:
+
+	puzzleFile:= table([ "startingPositionsOfWords" = puzzle[2], 
+			     "puzzleString"             = PuzzleStringArrayToString(puzzle[3]), 
+			     "puzzleLength"             = nops(puzzle[3]), 
+			     "generatedHints"           = false ,
+			     "puzzleWord"               = PuzzleToStringArray(puzzle[1])]):
+	print(op(puzzleFile));
+
+	fileName:= cat("puzzle", convert(i1, string), ".json"):
+	path:= cat(outputDir, "/", fileName):
+	Export(path, puzzleFile, "JSON"):
+end:
+
 PuzzlesToJSON := proc(constraintsFile, outputDir):
 	puzzles:= []:
 	constraints       := Import(constraintsFile);
@@ -205,25 +236,21 @@ PuzzlesToJSON := proc(constraintsFile, outputDir):
 
 	puzzlesToGenerate := constraints["puzzlesToGenerate"]:
 
-	for i from 1 to puzzlesToGenerate do
-		# The starter word for every puzzle is different.
-	        starterWordPool   := ENG()[rand(constraints["starterWordMinLength"]..constraints["starterWordMaxLength"])()];
-	        starterWord       := starterWordPool[rand(1..nops(starterWordPool))()];
+	starterWordMinLength := constraints["starterWordMinLength"];
+	starterWordMaxLength := constraints["starterWordMaxLength"];
+	
+	ids                  := [];
 
-		puzzle 		  := FAIL;
-
-		while puzzle = FAIL do:
-			puzzle := GeneratePuzzle(starterWord, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength):
-		od:
-
-		puzzleFile:= table([ "startingPositionsOfWords" = puzzle[2], 
-			             "puzzleString"             = PuzzleStringArrayToString(puzzle[3]), 
-				     "puzzleLength"             = nops(puzzle[3]), 
-			             "generatedHints"           = false ]):
-		print(op(puzzleFile));
-
-		fileName:= cat("puzzle", convert(i, string), ".json"):
-		path:= cat(outputDir, "/", fileName):
-		Export(path, puzzleFile, "JSON"):
+	for i1 from 1 to puzzlesToGenerate do
+		print(minWordOverlap);
+		id := Threads:-Create(
+			GeneratePuzzleToJSON( i1, outputDir, starterWordMinLength, 
+				starterWordMaxLength, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength ));
+		ids := [op(ids), id];
 	od: 
+
+	for id in ids do:
+		print(cat("Wait ", Threads:-Wait(id)));
+	od:
 end:
+
