@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 36,
-  "puzzleString": "pokefirstsurishissedwardeducellinkup",
+  "puzzleLength": 25,
+  "puzzleString": "crewerstrideadsorbstannic",
   "puzzleWord": [
-    "poke",
-    "kefirs",
-    "firsts",
-    "tsuris",
-    "rishis",
-    "hissed",
-    "edward",
-    "warded",
-    "deduce",
-    "celli",
-    "linkup"
+    "crew",
+    "ewers",
+    "erst",
+    "stride",
+    "deads",
+    "adsorb",
+    "orbs",
+    "stannic"
   ],
   "startingPositionsOfWords": [
     0,
     2,
     4,
-    8,
-    11,
-    14,
-    18,
-    20,
-    23,
-    27,
-    30
+    6,
+    10,
+    12,
+    15,
+    18
   ]
 }

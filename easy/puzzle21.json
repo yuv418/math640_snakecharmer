@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 36,
-  "puzzleString": "suptimescallerodeonianomiamblerbiums",
+  "puzzleLength": 24,
+  "puzzleString": "thusabletupsstempsalmost",
   "puzzleWord": [
-    "supt",
-    "uptime",
-    "mescal",
-    "caller",
-    "erode",
-    "rodeo",
-    "eonian",
-    "anomia",
-    "iamb",
-    "ambler",
-    "erbiums"
+    "thus",
+    "usable",
+    "letups",
+    "psst",
+    "stem",
+    "temps",
+    "psalm",
+    "almost"
   ],
   "startingPositionsOfWords": [
     0,
-    1,
-    5,
-    8,
+    2,
+    6,
+    10,
     12,
     13,
     16,
-    20,
-    24,
-    25,
-    29
+    18
   ]
 }

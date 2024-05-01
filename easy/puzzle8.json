@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 30,
-  "puzzleString": "pitypierectskingleerieeenclasp",
+  "puzzleLength": 25,
+  "puzzleString": "lothwarteryastrayonkernel",
   "puzzleWord": [
-    "pity",
-    "typier",
-    "pier",
-    "erects",
-    "tsking",
-    "king",
-    "ingle",
-    "glee",
-    "eerie",
-    "ieee",
-    "enclasp"
+    "loth",
+    "thwart",
+    "artery",
+    "ryas",
+    "astray",
+    "rayon",
+    "yonker",
+    "kernel"
   ],
   "startingPositionsOfWords": [
     0,
     2,
-    4,
-    6,
-    10,
-    12,
-    13,
-    15,
-    17,
-    20,
-    23
+    5,
+    9,
+    11,
+    14,
+    16,
+    19
   ]
 }

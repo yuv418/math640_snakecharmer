@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 33,
-  "puzzleString": "goopesseederiversedermsecoleasing",
+  "puzzleLength": 25,
+  "puzzleString": "cosyrupiahimsaharabiconic",
   "puzzleWord": [
-    "goop",
-    "opes",
-    "esse",
-    "seeder",
-    "derive",
-    "versed",
-    "seder",
-    "derms",
-    "msec",
-    "ecole",
-    "leasing"
+    "cosy",
+    "syrup",
+    "rupiah",
+    "ahimsa",
+    "sahara",
+    "arab",
+    "rabic",
+    "iconic"
   ],
   "startingPositionsOfWords": [
     0,
     2,
     4,
-    6,
-    9,
-    13,
+    8,
+    12,
+    15,
     16,
-    18,
-    21,
-    23,
-    26
+    19
   ]
 }

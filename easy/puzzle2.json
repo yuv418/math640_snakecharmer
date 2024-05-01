@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 33,
-  "puzzleString": "howletsetseepedalumbargenskyahweh",
+  "puzzleLength": 28,
+  "puzzleString": "eddamenullediblentossescaped",
   "puzzleWord": [
-    "howl",
-    "owlets",
-    "tsetse",
-    "seeped",
-    "pedal",
-    "alum",
-    "lumbar",
-    "barge",
-    "gens",
-    "ensky",
-    "yahweh"
+    "edda",
+    "dame",
+    "menu",
+    "nulled",
+    "edible",
+    "lentos",
+    "tosses",
+    "escaped"
   ],
   "startingPositionsOfWords": [
     0,
-    1,
-    5,
-    9,
-    12,
-    15,
-    16,
-    19,
-    22,
-    23,
-    27
+    2,
+    4,
+    6,
+    10,
+    14,
+    17,
+    21
   ]
 }

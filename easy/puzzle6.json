@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 30,
-  "puzzleString": "nunsealsoleumsectsetsederosion",
+  "puzzleLength": 29,
+  "puzzleString": "shoozilyratestsarthurnstymies",
   "puzzleWord": [
-    "nuns",
-    "unseal",
-    "seals",
-    "also",
-    "sole",
-    "oleums",
-    "msec",
-    "sects",
-    "tsetse",
-    "seder",
-    "erosion"
+    "shoo",
+    "oozily",
+    "lyrate",
+    "tests",
+    "tsar",
+    "arthur",
+    "urns",
+    "stymies"
   ],
   "startingPositionsOfWords": [
     0,
-    1,
-    3,
-    5,
-    7,
-    8,
-    12,
+    2,
+    6,
+    10,
     13,
-    16,
-    20,
-    23
+    15,
+    19,
+    22
   ]
 }

@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 30,
-  "puzzleString": "deandeskimbedgypsstoogeomitted",
+  "puzzleLength": 25,
+  "puzzleString": "kookayahoostomythymismark",
   "puzzleWord": [
-    "dean",
-    "andes",
-    "desk",
-    "skim",
-    "imbed",
-    "edgy",
-    "gyps",
-    "psst",
-    "stooge",
-    "geom",
-    "omitted"
+    "kook",
+    "okay",
+    "ayah",
+    "yahoos",
+    "ostomy",
+    "myth",
+    "thymi",
+    "mismark"
   ],
   "startingPositionsOfWords": [
     0,
     2,
     4,
-    6,
-    8,
-    11,
+    5,
+    9,
     13,
     15,
-    17,
-    21,
-    23
+    18
   ]
 }

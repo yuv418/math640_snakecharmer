@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 36,
-  "puzzleString": "hunsewerstudiowannexusablynxesabbath",
+  "puzzleLength": 23,
+  "puzzleString": "platentyrantsarsonstomp",
   "puzzleWord": [
-    "huns",
-    "unsew",
-    "ewers",
-    "erst",
-    "studio",
-    "iowan",
-    "annex",
-    "nexus",
-    "usably",
-    "lynxes",
-    "sabbath"
+    "plat",
+    "latent",
+    "tenty",
+    "tyrant",
+    "ants",
+    "tsar",
+    "arsons",
+    "stomp"
   ],
   "startingPositionsOfWords": [
     0,
     1,
-    4,
+    3,
     6,
-    8,
-    12,
-    15,
-    17,
-    20,
-    24,
-    29
+    9,
+    11,
+    13,
+    18
   ]
 }

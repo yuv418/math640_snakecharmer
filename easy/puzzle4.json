@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 33,
-  "puzzleString": "duoscarsedgyresterneedleedswagged",
+  "puzzleLength": 24,
+  "puzzleString": "tearthymiserbialyingrate",
   "puzzleWord": [
-    "duos",
-    "oscars",
-    "arse",
-    "sedgy",
-    "edgy",
-    "gyres",
-    "rester",
-    "erne",
-    "needle",
-    "leeds",
-    "swagged"
+    "tear",
+    "earth",
+    "thymi",
+    "mise",
+    "serbia",
+    "bialy",
+    "lying",
+    "ingrate"
   ],
   "startingPositionsOfWords": [
     0,
-    2,
-    5,
+    1,
+    4,
     7,
-    8,
-    10,
+    9,
     12,
-    16,
-    18,
-    22,
-    26
+    15,
+    17
   ]
 }

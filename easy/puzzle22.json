@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 29,
-  "puzzleString": "otickerryasheddyingateamoroso",
+  "puzzleLength": 27,
+  "puzzleString": "verbiumblessoncestopicshive",
   "puzzleWord": [
-    "otic",
-    "ticker",
-    "kerry",
-    "ryas",
-    "ashed",
-    "eddy",
-    "dying",
-    "ingate",
-    "gate",
-    "team",
-    "amoroso"
+    "verb",
+    "erbium",
+    "umbles",
+    "lesson",
+    "onces",
+    "estop",
+    "topics",
+    "shive"
   ],
   "startingPositionsOfWords": [
     0,
     1,
-    4,
-    7,
-    9,
+    5,
+    8,
     12,
-    14,
-    16,
-    18,
-    20,
+    15,
+    17,
     22
   ]
 }

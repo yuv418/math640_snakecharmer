@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 28,
-  "puzzleString": "verbiumpsalmsectsuriseremove",
+  "puzzleLength": 20,
+  "puzzleString": "nunsealsoleumsection",
   "puzzleWord": [
-    "verb",
-    "erbium",
-    "umps",
-    "psalm",
-    "alms",
+    "nuns",
+    "unseal",
+    "seals",
+    "also",
+    "sole",
+    "oleums",
     "msec",
-    "sects",
-    "tsuris",
-    "riser",
-    "sere",
-    "remove"
+    "section"
   ],
   "startingPositionsOfWords": [
     0,
     1,
+    3,
     5,
     7,
-    9,
-    11,
+    8,
     12,
-    15,
-    18,
-    20,
-    22
+    13
   ]
 }

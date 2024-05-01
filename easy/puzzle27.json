@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 35,
-  "puzzleString": "kookayahoostomythymiredgeeingeoduck",
+  "puzzleLength": 20,
+  "puzzleString": "noirateslavicarnylon",
   "puzzleWord": [
-    "kook",
-    "okay",
-    "ayah",
-    "yahoos",
-    "ostomy",
-    "myth",
-    "thymi",
-    "mired",
-    "edge",
-    "geeing",
-    "geoduck"
+    "noir",
+    "irate",
+    "rates",
+    "tesla",
+    "slavic",
+    "vicar",
+    "carny",
+    "nylon"
   ],
   "startingPositionsOfWords": [
     0,
     2,
-    4,
+    3,
     5,
-    9,
-    13,
-    15,
-    18,
-    21,
-    23,
-    28
+    7,
+    10,
+    12,
+    15
   ]
 }

@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 35,
-  "puzzleString": "eddamenullediblentossesamenticelled",
+  "puzzleLength": 25,
+  "puzzleString": "tassisilversentingotruant",
   "puzzleWord": [
-    "edda",
-    "dame",
-    "menu",
-    "nulled",
-    "edible",
-    "lentos",
-    "tosses",
-    "sesame",
-    "ament",
-    "entice",
-    "celled"
+    "tass",
+    "assisi",
+    "silver",
+    "verse",
+    "senti",
+    "ting",
+    "ingot",
+    "truant"
   ],
   "startingPositionsOfWords": [
     0,
-    2,
-    4,
-    6,
-    10,
+    1,
+    5,
+    8,
+    11,
     14,
-    17,
-    20,
-    23,
-    25,
-    29
+    15,
+    19
   ]
 }

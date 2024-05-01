@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 25,
-  "puzzleString": "saleseepsomashespyxestops",
+  "puzzleLength": 24,
+  "puzzleString": "altoterseespialoeuvregal",
   "puzzleWord": [
-    "sale",
-    "ales",
-    "lese",
-    "seep",
-    "epsom",
-    "somas",
-    "mashes",
-    "espy",
-    "pyxes",
-    "estop",
-    "stops"
+    "alto",
+    "toters",
+    "terse",
+    "sees",
+    "espial",
+    "aloe",
+    "oeuvre",
+    "regal"
   ],
   "startingPositionsOfWords": [
     0,
-    1,
     2,
     4,
-    6,
-    8,
-    10,
-    14,
-    16,
-    19,
-    20
+    7,
+    9,
+    13,
+    15,
+    19
   ]
 }

@@ -1,1 +1,25 @@
-{"generatedHints": true, "puzzleLength": 28, "puzzleString": "poneidanestopsstatsuriskycap", "puzzleWord": ["pone", "oneida", "dane", "nest", "estops", "psst", "stat", "tats", "tsuris", "risk", "skycap"], "startingPositionsOfWords": [0, 1, 5, 7, 8, 12, 14, 15, 17, 20, 22], "hints": ["Initial mark made by a player's first move", "Iroquois tribe known for canoes.", "A native of Denmark often speaks this language.", "Cozy retreat for birds or animals often tucked away.", "Holds back or prohibits through formal action", "A quiet whisper often precedes this word.", "Numerical data summary often begins with this abbreviation.", "Ink designs permanently etched on skin.", "Jewish concept of troubles and misfortunes.", "Potential outcome or consequence of uncertainty.", "Airport official responsible for arrivals."]}
+{
+  "generatedHints": false,
+  "puzzleLength": 21,
+  "puzzleString": "pitypierectskingletup",
+  "puzzleWord": [
+    "pity",
+    "typier",
+    "pier",
+    "erects",
+    "tsking",
+    "king",
+    "ingle",
+    "letup"
+  ],
+  "startingPositionsOfWords": [
+    0,
+    2,
+    4,
+    6,
+    10,
+    12,
+    13,
+    16
+  ]
+}

@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 30,
-  "puzzleString": "slumpedlarvaspirefulnasacramps",
+  "puzzleLength": 27,
+  "puzzleString": "howebbyronaldermazerscratch",
   "puzzleWord": [
-    "slum",
-    "umped",
-    "pedlar",
-    "larvas",
-    "aspire",
-    "ireful",
-    "ulnas",
-    "nasa",
-    "sacra",
-    "cram",
-    "cramps"
+    "howe",
+    "webby",
+    "byron",
+    "ronald",
+    "alder",
+    "derma",
+    "mazers",
+    "scratch"
   ],
   "startingPositionsOfWords": [
     0,
     2,
-    4,
+    5,
     7,
-    11,
-    14,
-    18,
-    20,
-    22,
-    24,
-    24
+    10,
+    12,
+    15,
+    20
   ]
 }

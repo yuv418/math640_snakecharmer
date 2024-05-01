@@ -1,31 +1,25 @@
 {
   "generatedHints": false,
-  "puzzleLength": 31,
-  "puzzleString": "posealliesseerilyinglessaysculp",
+  "puzzleLength": 28,
+  "puzzleString": "typeachymeltonericasinovelty",
   "puzzleWord": [
-    "pose",
-    "seal",
-    "allies",
-    "esse",
-    "seer",
-    "eerily",
-    "lying",
-    "ingles",
-    "less",
-    "essays",
-    "sculp"
+    "type",
+    "peachy",
+    "chyme",
+    "melton",
+    "toner",
+    "ericas",
+    "casino",
+    "novelty"
   ],
   "startingPositionsOfWords": [
     0,
     2,
-    4,
+    5,
     8,
-    10,
     11,
-    15,
+    14,
     17,
-    20,
-    21,
-    26
+    21
   ]
 }
