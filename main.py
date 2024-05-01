@@ -1,6 +1,8 @@
 import pygame as pg
 import asyncio
 import math
+import json
+import sys
 
 # rendering parameters
 RESOLUTION = (850, 1100)  # aspect ratio of a sheet of paper
@@ -46,7 +48,6 @@ async def main(puzzleLen, wordPositions, hints, solution):
                 running = False
 
             if event.type == pg.KEYUP:
-                print(f"solution {solution} currentGuess {currentGuess}")
                 if event.key == pg.K_SPACE and solution != currentGuess:
                     displaySolutions = not displaySolutions
                 elif event.key == pg.K_LEFT:
@@ -134,4 +135,13 @@ if __name__ == "__main__":
     # - list of hints
     # - final solution string
 
-asyncio.run(main(10, [0, 5], ["greeting", "globe"], "helloworld"))
+    if len(sys.argv) < 2:
+        print("Usage: python main.py puzzle_file.json")
+        exit(1)
+
+    puzzleRead = None
+    with open(sys.argv[1]) as puzzleFile:
+        puzzleRead = json.load(puzzleFile)
+
+    
+    asyncio.run(main(puzzleRead['puzzleLength'], puzzleRead['startingPositionsOfWords'], puzzleRead['hints'], puzzleRead['puzzleString']))
