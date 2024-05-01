@@ -1,0 +1,25 @@
+{
+  "generatedHints": false,
+  "puzzleLength": 25,
+  "puzzleString": "penduestherbiumpsalmadcap",
+  "puzzleWord": [
+    "pend",
+    "endues",
+    "esther",
+    "herb",
+    "erbium",
+    "umps",
+    "psalm",
+    "madcap"
+  ],
+  "startingPositionsOfWords": [
+    0,
+    1,
+    5,
+    8,
+    9,
+    13,
+    15,
+    19
+  ]
+}

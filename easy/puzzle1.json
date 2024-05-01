@@ -1,0 +1,25 @@
+{
+  "generatedHints": false,
+  "puzzleLength": 21,
+  "puzzleString": "pitypierectskingletup",
+  "puzzleWord": [
+    "pity",
+    "typier",
+    "pier",
+    "erects",
+    "tsking",
+    "king",
+    "ingle",
+    "letup"
+  ],
+  "startingPositionsOfWords": [
+    0,
+    2,
+    4,
+    6,
+    10,
+    12,
+    13,
+    16
+  ]
+}

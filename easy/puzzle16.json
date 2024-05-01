@@ -1,0 +1,25 @@
+{
+  "generatedHints": false,
+  "puzzleLength": 20,
+  "puzzleString": "saleseepsomashestrus",
+  "puzzleWord": [
+    "sale",
+    "ales",
+    "lese",
+    "seep",
+    "epsom",
+    "somas",
+    "mashes",
+    "estrus"
+  ],
+  "startingPositionsOfWords": [
+    0,
+    1,
+    2,
+    4,
+    6,
+    8,
+    10,
+    14
+  ]
+}
