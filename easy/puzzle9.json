@@ -1,0 +1,25 @@
+{
+  "generatedHints": false,
+  "puzzleLength": 25,
+  "puzzleString": "tassisilversentingotruant",
+  "puzzleWord": [
+    "tass",
+    "assisi",
+    "silver",
+    "verse",
+    "senti",
+    "ting",
+    "ingot",
+    "truant"
+  ],
+  "startingPositionsOfWords": [
+    0,
+    1,
+    5,
+    8,
+    11,
+    14,
+    15,
+    19
+  ]
+}

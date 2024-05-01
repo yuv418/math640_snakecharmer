@@ -1,0 +1,25 @@
+{
+  "generatedHints": false,
+  "puzzleLength": 25,
+  "puzzleString": "lothwarteryastrayonkernel",
+  "puzzleWord": [
+    "loth",
+    "thwart",
+    "artery",
+    "ryas",
+    "astray",
+    "rayon",
+    "yonker",
+    "kernel"
+  ],
+  "startingPositionsOfWords": [
+    0,
+    2,
+    5,
+    9,
+    11,
+    14,
+    16,
+    19
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "generatedHints": false,
+  "puzzleLength": 23,
+  "puzzleString": "platentyrantsarsonstomp",
+  "puzzleWord": [
+    "plat",
+    "latent",
+    "tenty",
+    "tyrant",
+    "ants",
+    "tsar",
+    "arsons",
+    "stomp"
+  ],
+  "startingPositionsOfWords": [
+    0,
+    1,
+    3,
+    6,
+    9,
+    11,
+    13,
+    18
+  ]
+}

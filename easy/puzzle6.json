@@ -1,0 +1,25 @@
+{
+  "generatedHints": false,
+  "puzzleLength": 29,
+  "puzzleString": "shoozilyratestsarthurnstymies",
+  "puzzleWord": [
+    "shoo",
+    "oozily",
+    "lyrate",
+    "tests",
+    "tsar",
+    "arthur",
+    "urns",
+    "stymies"
+  ],
+  "startingPositionsOfWords": [
+    0,
+    2,
+    6,
+    10,
+    13,
+    15,
+    19,
+    22
+  ]
+}

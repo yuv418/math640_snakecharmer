@@ -1,6 +1,6 @@
 {  "starterWordMinLength"   	  : 4,
    "starterWordMaxLength"  	  : 4,
-   "minLength"             	  : 10,
+   "minLength"             	  : 7,
    "minWordOverlap"       	  : 2,
    "maxWordOverlap"        	  : 4,
    "minWordLength"        	  : 4,
