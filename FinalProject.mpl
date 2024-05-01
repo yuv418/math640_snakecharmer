@@ -81,9 +81,17 @@ AppendFollowerToPuzzle := proc(puzzle, minWordOverlap, overlapRand, wordLenRand)
 		fi:
 		iters++;
 	od:
-	chosenAddition := puzzle[1]; 	
-	while member(chosenAddition, puzzle) do:
+	chosenAddition := followers[rand(1..nops(followers))()];
+	isSuperset := false;
+	if nops(chosenAddition) < nops(puzzle[-1]) then:
+		isSuperset := puzzle[-1][1..nops(chosenAddition)] = chosenAddition;
+	fi:
+	# No supersets of previous words!
+	while member(chosenAddition, puzzle) or isSuperset do:
 		chosenAddition := followers[rand(1..nops(followers))()];
+		if nops(chosenAddition) < nops(puzzle[-1]) then:
+			isSuperset := puzzle[-1][1..nops(chosenAddition)] = chosenAddition;
+		fi:
 	od:
 	puzzleMod := [op(puzzle), chosenAddition];
 	return puzzleMod, wordOverlap;
@@ -200,6 +208,13 @@ end:
 #   "puzzleLength": 10,
 #   "hints": ["greeting", "globe"] }
 GeneratePuzzleToJSON := proc(i1, outputDir, starterWordMinLength, starterWordMaxLength, minLength, minWordOverlap, maxWordOverlap, minWordLength, maxWordLength):
+	fileName:= cat("puzzle", convert(i1, string), ".json"):
+	path:= cat(outputDir, "/", fileName):
+	if FileTools:-Exists(path) then:
+		print(cat("Skipping medium puzzle ", i1, " file ", path, " exists."));
+		return;
+	fi:
+
 	# The starter word for every puzzle is different.
 	starterWordPool   := ENG()[rand(starterWordMinLength..starterWordMaxLength)()];
 	starterWord       := starterWordPool[rand(1..nops(starterWordPool))()];
@@ -217,8 +232,6 @@ GeneratePuzzleToJSON := proc(i1, outputDir, starterWordMinLength, starterWordMax
 			     "puzzleWord"               = PuzzleToStringArray(puzzle[1])]):
 	print(op(puzzleFile));
 
-	fileName:= cat("puzzle", convert(i1, string), ".json"):
-	path:= cat(outputDir, "/", fileName):
 	Export(path, puzzleFile, "JSON"):
 end:
 
