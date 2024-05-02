@@ -6,14 +6,14 @@ import sys
 import platform
 
 # rendering parameters
-RESOLUTION = (1100, 1100)  # aspect ratio of a sheet of paper
+RESOLUTION = (1100, 1650)  # aspect ratio of a sheet of paper
 PUZZLE_CENTER = (RESOLUTION[0] * 0.5, RESOLUTION[1] * 0.33)
-PUZZLE_OUTER_RAD = 350
+PUZZLE_OUTER_RAD = 450
 PUZZLE_INNER_RAD = 250
 PUZZLE_LINE_WIDTH = 10
-PUZZLE_LABEL_RAD = 320
+PUZZLE_LABEL_RAD = 420
 
-HINT_START_POS = (RESOLUTION[0] * 0.025, RESOLUTION[1] * 0.7)
+HINT_START_POS = (RESOLUTION[0] * 0.025, RESOLUTION[1] * 0.66)
 HINT_VERTICAL_STRIDE = 35
 
 
@@ -114,7 +114,7 @@ async def main(puzzleLen, wordPositions, hints, words, solution):
             textSurface = solutionFont.render(onscreenChar.upper(), True, renderColor)
 
             angle = ((i + 0.5) / puzzleLen) * 2.0 * math.pi - math.pi * 0.5
-            rad = PUZZLE_INNER_RAD * 0.75 + PUZZLE_OUTER_RAD * 0.25
+            rad = (PUZZLE_INNER_RAD + PUZZLE_OUTER_RAD) * 0.5
             pos = (
                 rad * math.cos(angle) + PUZZLE_CENTER[0] - 0.5 * textSurface.get_size()[0],
                 rad * math.sin(angle) + PUZZLE_CENTER[1] - 0.5 * textSurface.get_size()[1],
